@@ -1,0 +1,102 @@
+@media screen and (max-width: 651px) {
+  .popup-button {
+    position: fixed;
+    right: 20px;
+    bottom: 20px;
+    border-radius: 100%;
+    width: 10%;
+    height: 10%;
+    background-color: #00ffff;
+  }
+}
+
+@media screen and (min-width: 652px) {
+  .popup-button {
+    position: fixed;
+    right: 20px;
+    bottom: 20px;
+    border-radius: 100%;
+    width: 5%;
+    height: 10%;
+    background-color: #00ffff;
+    bottom: 5%;
+  }
+  .container {
+    border: 3px solid #000;
+    background-color: white;
+    border-color: gray;
+    position: fixed;
+    width: 35%;
+    height: 65%;
+    right: 3%;
+    bottom: 5%;
+  }
+}
+
+.container {
+  border: 3px solid #000;
+  background-color: white;
+  border-color: gray;
+  position: fixed;
+  width: 45%;
+  height: 70%;
+  right: 3%;
+  bottom: 5%;
+}
+
+.row {
+  position: relative;
+  top: 65%;
+}
+
+.btn {
+  /*アニメーションの起点とするためrelativeを指定*/
+  position: relative;
+  overflow: hidden;
+  /*ボタンの形状*/
+  text-decoration: none;
+  display: inline-block;
+  border: 1px solid #555; /* ボーダーの色と太さ */
+  padding: 10px 30px;
+  text-align: center;
+  outline: none;
+  /*アニメーションの指定*/
+  transition: ease 0.2s;
+  width: 100%;
+}
+
+/*ボタン内spanの形状*/
+.btn span {
+  position: relative;
+  z-index: 3; /*z-indexの数値をあげて文字を背景よりも手前に表示*/
+  color: #333;
+  top: 20%;
+}
+
+.btn:hover span {
+  color: #fff;
+}
+
+/*== 背景が流れる（左から右） */
+.bgleft:before {
+  content: "";
+  /*絶対配置で位置を指定*/
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 2;
+  /*色や形状*/
+  background: #333; /*背景色*/
+  width: 100%;
+  height: 100%;
+  /*アニメーション*/
+  transition: transform 0.6s cubic-bezier(0.8, 0, 0.2, 1) 0s;
+  transform: scale(0, 1);
+  transform-origin: right top;
+}
+
+/*hoverした際の形状*/
+.bgleft:hover:before {
+  transform-origin: left top;
+  transform: scale(1, 1);
+}

@@ -8,7 +8,6 @@ const Search = (props) => {
     e.preventDefault();
 
     const data = await searchMovie(keyWord.current.value);
-    console.log(data);
     if (data.Response === "True") {
       props.setMovies(data);
       props.setErrorMessage("");

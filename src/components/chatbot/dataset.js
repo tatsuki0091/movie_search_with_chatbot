@@ -1,15 +1,15 @@
 const defaultDataset = {
   init: {
     answers: [
-      { content: "仕事を依頼したい", nextId: "job_offer" },
+      { content: "I want to find a movie", nextId: "job_offer" },
       {
-        content: "エンジニアのキャリアについて相談したい",
+        content: "I want to talk to you about the movie",
         nextId: "consultant",
       },
-      { content: "学習コミュニティについて知りたい", nextId: "community" },
-      { content: "お付き合いしたい", nextId: "dating" },
+      { content: "Please tell me about your favorite", nextId: "community" },
+      { content: "I want to go to the cafe with you", nextId: "dating" },
     ],
-    question: "こんにちは！🐯トラハックへのご用件はなんでしょうか？",
+    question: "Hi! What can I help you?",
   },
   job_offer: {
     answers: [

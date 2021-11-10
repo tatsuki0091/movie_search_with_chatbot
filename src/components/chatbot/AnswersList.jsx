@@ -1,13 +1,17 @@
 import React from "react";
 import { Answer } from "./index";
 
-const AnswersList = () => {
+const AnswersList = (props) => {
   return (
     <>
-      <Answer />
-      <Answer />
-      <Answer />
-      <Answer />
+      {props.answers.map((answer, index) => (
+        <Answer
+          content={answer.content}
+          key={index}
+          nextId={answer.nextId}
+          select={props.select}
+        />
+      ))}
     </>
   );
 };

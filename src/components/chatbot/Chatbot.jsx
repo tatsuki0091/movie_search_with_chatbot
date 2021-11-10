@@ -1,6 +1,6 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import defaultDataset from "./dataset";
-import { AnswersList } from "./index";
+import { AnswersList, Chats } from "./index";
 
 const Chatbot = () => {
   const [popUpButton, setPopUpButton] = useState(false);
@@ -12,12 +12,34 @@ const Chatbot = () => {
   const handleChatoBox = (button) => {
     setPopUpButton(!button);
   };
+  const initAnswer = () => {
+    const initDataSet = dataset[currentId];
+    const initAnswerList = initDataSet.answers;
+    setAnswers(initAnswerList);
+  };
+
+  const initChats = () => {
+    const initDataSet = dataset[currentId];
+    const chat = {
+      text: initDataSet.question,
+      type: "question",
+    };
+
+    const array = new Array(chat);
+
+    setChats(array);
+  };
+  useEffect(() => {
+    initAnswer();
+    initChats();
+  }, []);
   return (
     <>
       {popUpButton && (
         <section className="container">
           <div className="row">
-            <AnswersList />
+            <Chats chats={chats} />
+            <AnswersList answers={answers} />
             {/* <textarea placeholder="Send a message..." />
               <button>Send</button> */}
           </div>

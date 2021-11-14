@@ -8,7 +8,7 @@ import Takutou from "../../assets/takutou.jpeg";
 
 const Chat = (props) => {
   const isQuestion = props.type === "question";
-  const classes = isQuestion ? "p-chat_row" : "p_chat__reverse";
+  const classes = isQuestion ? "p-chat__row" : "p-chat__reverse ";
   return (
     <>
       <ListItem className={classes}>

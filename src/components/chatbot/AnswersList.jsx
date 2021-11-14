@@ -7,7 +7,7 @@ const AnswersList = (props) => {
       {props.answers.map((answer, index) => (
         <Answer
           content={answer.content}
-          key={index}
+          key={`answers-${index}`}
           nextId={answer.nextId}
           select={props.select}
         />

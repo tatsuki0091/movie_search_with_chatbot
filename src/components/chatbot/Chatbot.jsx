@@ -1,8 +1,11 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useLayoutEffect, useEffect, useRef } from "react";
 import defaultDataset from "./dataset";
 import { AnswersList, Chats } from "./index";
+import Form from "../forms/Form";
+import ChatImg from "../../assets/chat.png";
 
 const Chatbot = () => {
+  const scrollBottomRef = useRef(null);
   const [popUpButton, setPopUpButton] = useState(false);
   const [answers, setAnswers] = useState([]);
   const [chats, setChats] = useState([]);
@@ -12,37 +15,80 @@ const Chatbot = () => {
   const handleChatoBox = (button) => {
     setPopUpButton(!button);
   };
-  const initAnswer = () => {
-    const initDataSet = dataset[currentId];
-    const initAnswerList = initDataSet.answers;
-    setAnswers(initAnswerList);
+
+  const handleClickOpen = () => {
+    setOpen(true);
   };
 
-  const initChats = () => {
-    const initDataSet = dataset[currentId];
+  const handleClose = () => {
+    setOpen(false);
+  };
+
+  const displayNextQuestion = (nextQuestionId) => {
     const chat = {
-      text: initDataSet.question,
+      text: dataset[nextQuestionId].question,
       type: "question",
     };
 
-    const array = new Array(chat);
-
+    const array = chats;
+    array.push(chat);
+    setAnswers(dataset[nextQuestionId].answers);
     setChats(array);
+    setCurrentId(nextQuestionId);
   };
+
+  const selectAnswer = (selectedAnswer, nextQuestionId) => {
+    switch (true) {
+      case nextQuestionId === "init":
+        setTimeout(() => displayNextQuestion(nextQuestionId));
+        break;
+      case /^https:*/.test(nextQuestionId):
+        const a = document.createElement("a");
+        a.href = nextQuestionId;
+        a.target = "_blank";
+        a.click();
+        break;
+      case nextQuestionId === "contact":
+        handleClickOpen();
+        break;
+      default:
+        const chat = {
+          text: selectedAnswer,
+          type: "answer",
+        };
+
+        const array = chats;
+
+        array.push(chat);
+        setChats({ array });
+        displayNextQuestion(nextQuestionId);
+        break;
+    }
+  };
+
   useEffect(() => {
-    initAnswer();
-    initChats();
+    const initAnswer = "";
+    selectAnswer(initAnswer, currentId);
   }, []);
+
+  useLayoutEffect(() => {
+    // 以下はtypescriptの書き方。jsの場合は
+    if (scrollBottomRef && scrollBottomRef.current) {
+      scrollBottomRef.current.scrollIntoView();
+    }
+  });
   return (
     <>
       {popUpButton && (
         <section className="container">
           <div className="row">
             <Chats chats={chats} />
-            <AnswersList answers={answers} />
-            {/* <textarea placeholder="Send a message..." />
-              <button>Send</button> */}
+            <div ref={scrollBottomRef} />
           </div>
+          <div className="answer-row">
+            <AnswersList answers={answers} select={selectAnswer} />
+          </div>
+          <Form open={open} handleClose={handleClose} />
         </section>
       )}
 
@@ -52,9 +98,7 @@ const Chatbot = () => {
           handleChatoBox(popUpButton);
         }}
         className="popup-button"
-      >
-        Chat
-      </button>
+      />
     </>
   );
 };
